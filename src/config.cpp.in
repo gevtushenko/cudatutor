@@ -1,0 +1,6 @@
+#include "config.h"
+
+const char *get_boost_include_dir ()
+{
+  return "${Boost_INCLUDE_DIR}";
+}
