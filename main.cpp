@@ -21,5 +21,6 @@ int main ()
       return 1;
     }
 
-  load_answer ();
+  auto run = load_answer<int()> ("answer.so", "run");
+  std::cout << run () << "\n";
 }

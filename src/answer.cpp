@@ -2,38 +2,31 @@
 // Created by evtus on 1/7/2021.
 //
 
-#include <boost/dll.hpp>
-
-#include <iostream>
+#include <answer.h>
 
 namespace dll = boost::dll;
 
-void load_answer ()
+bool is_in_error_state (answer_load_state state)
 {
-  std::cout << "Loading plugin: " << "answer.so" << '\n';
-  dll::shared_library lib ("answer.so", dll::load_mode::append_decorations);
+  return state != answer_load_state::success;
+}
 
-  if (lib.is_loaded ())
-    std::cout << "loaded\n";
+void print_error_message (answer_load_state state)
+{
 
-  dll::library_info info ("answer.so");
-  for (auto &symbol: info.symbols ())
-    std::cout << "s: " << symbol << std::endl;
+}
 
-  if (!lib.has ("run"))
-    {
-      std::cout << "-\n";
-      // no such symbol
-      return;
-    }
-  std::cout << "+\n";
+answer_load_state check_dll (const char *library_path, const char *function_name)
+{
+  dll::shared_library lib (library_path, dll::load_mode::append_decorations);
 
-  // library has symbol, importing...
-  /*
-  typedef boost::shared_ptr<my_plugin_api> (pluginapi_create_t) ();
-  boost::function<pluginapi_create_t> creator =
-      dll::import_alias<pluginapi_create_t> (boost::move (lib), "create_plugin");
+  if (!lib.is_loaded ())
+    return answer_load_state::failed_loading_library;
 
-  std::cout << "Matching plugin name: " << creator ()->name () << std::endl;
-   */
+  dll::library_info info (library_path);
+
+  if (!lib.has (function_name))
+    return answer_load_state::failed_loading_function;
+
+  return answer_load_state::success;
 }
