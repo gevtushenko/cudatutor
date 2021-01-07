@@ -18,6 +18,6 @@ add_executable(cudatutor
         include/answer.h
         include/config.h
         ${CMAKE_CURRENT_BINARY_DIR}/config.cpp
-        )
+        include/question.h src/question.cpp src/questions/basics/vec_add.cpp include/questions.h src/questions.cpp)
 target_link_libraries(cudatutor PRIVATE ${Boost_LIBRARIES})
 target_include_directories(cudatutor PRIVATE ${Boost_INCLUDE_DIR} include)
