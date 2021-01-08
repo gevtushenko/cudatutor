@@ -34,7 +34,7 @@ bool question_t::write_question (const char *question_path) const
   return false;
 }
 
-bool question_t::ask_the_question () const
+bool question_t::ask_question () const
 {
   const char *question_path = "question.cu";
   const char *answer_path = "answer.so";
@@ -51,10 +51,5 @@ bool question_t::ask_the_question () const
       return true;
     }
 
-  return false;
-}
-
-bool question_t::check_answer () const
-{
   return false;
 }

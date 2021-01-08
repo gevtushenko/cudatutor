@@ -2,6 +2,8 @@
 
 #include "questions/vec_add.h"
 
+#include "answer.h"
+
 const char *vec_add_question_t::get_question_content () const
 {
   return R"(
@@ -14,7 +16,8 @@ return 42;
 )";
 }
 
-bool vec_add_question_t::check_answer_implementation () const
+bool vec_add_question_t::check_answer () const
 {
-  return true;
+  auto run = load_answer<int()> ("answer.so", "run");
+  return run () == 42;
 }

@@ -11,7 +11,9 @@ class vec_add_question_t : public question_t
 {
 protected:
   const char *get_question_content () const final;
-  bool check_answer_implementation () const final;
+
+public:
+  bool check_answer () const final;
 };
 
 #endif // CUDATUTOR_VEC_ADD_H

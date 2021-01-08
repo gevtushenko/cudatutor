@@ -12,11 +12,10 @@ private:
 
 protected:
   virtual const char *get_question_content () const = 0;
-  virtual bool check_answer_implementation () const = 0;
 
 public:
-  bool ask_the_question () const;
-  bool check_answer () const;
+  bool ask_question () const;
+  virtual bool check_answer () const = 0;
 };
 
 #endif // CUDATUTOR_QUESTION_H
