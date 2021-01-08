@@ -5,25 +5,16 @@
 #include "questions.h"
 #include "question.h"
 
-questions_t &questions_t::get_instance ()
+#include "questions/vec_add.h"
+
+questions_t::questions_t ()
 {
-  static questions_t questions;
-  return questions;
+  questions.push_back (std::make_unique<vec_add_question_t> ());
 }
 
-questions_t::questions_t () = default;
 questions_t::~questions_t () = default;
 
 const questions_t::container_t &questions_t::get_questions ()
 {
   return questions;
-}
-
-bool questions_t::register_question (const std::string &name, std::unique_ptr<question_t> question)
-{
-  if (questions.count (name))
-    return false;
-
-  questions[name] = std::move (question);
-  return true;
 }

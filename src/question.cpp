@@ -54,7 +54,7 @@ bool question_t::ask_the_question () const
   return false;
 }
 
-bool question_t::check_the_answer () const
+bool question_t::check_answer () const
 {
   return false;
 }
