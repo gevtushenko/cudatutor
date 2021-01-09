@@ -7,8 +7,9 @@ set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
 find_package(Boost 1.69.0 COMPONENTS system filesystem REQUIRED)
-message(${Boost_INCLUDE_DIR})
 configure_file(src/config.cpp.in config.cpp)
+
+find_package(Threads REQUIRED)
 
 add_executable(cudatutor
         main.cpp
@@ -19,5 +20,5 @@ add_executable(cudatutor
         include/config.h
         ${CMAKE_CURRENT_BINARY_DIR}/config.cpp
         include/question.h src/question.cpp src/questions/basics/vec_add.cpp include/questions.h src/questions.cpp include/questions/vec_add.h)
-target_link_libraries(cudatutor PRIVATE ${Boost_LIBRARIES})
+target_link_libraries(cudatutor PRIVATE ${Boost_LIBRARIES} Threads::Threads ${CMAKE_DL_LIBS})
 target_include_directories(cudatutor PRIVATE ${Boost_INCLUDE_DIR} include)
