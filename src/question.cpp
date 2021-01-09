@@ -16,6 +16,9 @@ std::string gen_compilation_command (const char *question_path, const char *answ
   cmd += " -I";
   cmd += get_boost_include_dir ();
   cmd += " ";
+#if linux
+  cmd += "--compiler-options '-fPIC' ";
+#endif
   cmd += question_path;
 
   return cmd;
