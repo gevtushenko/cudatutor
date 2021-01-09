@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.75.0 COMPONENTS system filesystem REQUIRED)
+find_package(Boost 1.69.0 COMPONENTS system filesystem REQUIRED)
 message(${Boost_INCLUDE_DIR})
 configure_file(src/config.cpp.in config.cpp)
 
