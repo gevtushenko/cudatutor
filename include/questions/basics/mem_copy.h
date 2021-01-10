@@ -16,4 +16,9 @@ public:
   bool check_answer_implementation () const final;
 };
 
+void mem_copy_kernel_wrapper (
+    const int n,
+    const float *in,
+    float *out);
+
 #endif // CUDATUTOR_MEM_COPY_H

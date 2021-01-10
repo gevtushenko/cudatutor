@@ -16,4 +16,10 @@ public:
   bool check_answer_implementation () const final;
 };
 
+void vec_add_reference_kernel_wrapper (
+    const int n,
+    const float *in_1,
+    const float *in_2,
+    float *out);
+
 #endif // CUDATUTOR_VEC_ADD_H

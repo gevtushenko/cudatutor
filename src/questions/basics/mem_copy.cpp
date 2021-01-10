@@ -1,4 +1,8 @@
 //
+// Created by evtus on 1/10/2021.
+//
+
+#include <cuda_runtime.h>
 
 #include "questions/basics/mem_copy.h"
 #include "questions/helpers/array_functions.h"
@@ -30,17 +34,6 @@ extern "C" BOOST_SYMBOL_EXPORT void mem_copy (
 )";
 }
 
-__global__ void reference_kernel (
-    const int n,
-    const float *in,
-    float *out)
-{
-  const int i = threadIdx.x + blockIdx.x * blockDim.x;
-
-  if (i < n)
-    out[i] = in[i];
-}
-
 bool mem_copy_question_t::check_answer_implementation () const
 {
   const int n = 1024;
@@ -52,27 +45,26 @@ bool mem_copy_question_t::check_answer_implementation () const
 
   cudaMemset (in, 42, n * sizeof (float));
 
-  auto user_solution = 
-    load_answer<void(const int, const float *, float *)> (
-        "answer.so", "mem_copy");
+  auto user_solution =
+      load_answer<void(const int, const float *, float *)> (
+          "answer.so", "mem_copy");
 
-  const int block_size = 128;
-  reference_kernel<<<(n + block_size - 1) / block_size, block_size>>> (n, in, reference);
+  mem_copy_kernel_wrapper (n, in, reference);
   check (cudaDeviceSynchronize ());
   check (cudaGetLastError ());
 
   bool status = true;
 
   try
-    {
-      user_solution (n, in, out);
-      check (cudaDeviceSynchronize ());
-      check (cudaGetLastError ());
-    }
+  {
+    user_solution (n, in, out);
+    check (cudaDeviceSynchronize ());
+    check (cudaGetLastError ());
+  }
   catch (...)
-    {
-      status = false;
-    }
+  {
+    status = false;
+  }
 
   if (status)
     status = is_equal (n, reference, out);
@@ -80,6 +72,6 @@ bool mem_copy_question_t::check_answer_implementation () const
   cudaFree (reference);
   cudaFree (out);
   cudaFree (in);
- 
+
   return status;
 }
