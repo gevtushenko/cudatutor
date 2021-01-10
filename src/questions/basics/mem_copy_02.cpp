@@ -4,35 +4,39 @@
 
 #include <cuda_runtime.h>
 
-#include "questions/basics/mem_copy_01.h"
+#include "questions/basics/mem_copy_02.h"
 #include "questions/helpers/array_functions.h"
 
 #include "answer.h"
 
-const char *mem_copy_01_question_t::get_question_content () const
+const char *mem_copy_02_question_t::get_question_content () const
 {
   return R"(
 #include <boost/config.hpp> // for BOOST_SYMBOL_EXPORT
 
 __global__ void mem_copy_kernel (
+  const int n,
   const float *in,
   float *out)
 {
-  // TODO Copy variable pointed by in into variable pointed by out
+  // TODO Write memory copying kernel
 }
 
 extern "C" BOOST_SYMBOL_EXPORT void mem_copy (
+  const int n,
   const float *in,
   float *out)
 {
-  mem_copy_kernel<<<1, 1>>> (in, out);
+  const int block_size = 128;
+  const int grid_size = 0; // TODO Calculate grid size
+  mem_copy_kernel<<<grid_size, block_size>>> (n, in, out);
 }
 )";
 }
 
-bool mem_copy_01_question_t::check_answer_implementation () const
+bool mem_copy_02_question_t::check_answer_implementation () const
 {
-  const int n = 1;
+  const int n = 1024;
   float *in {}, *out {}, *reference {};
 
   cudaMalloc (&in, n * sizeof (float));
@@ -42,10 +46,10 @@ bool mem_copy_01_question_t::check_answer_implementation () const
   cudaMemset (in, 42, n * sizeof (float));
 
   auto user_solution =
-      load_answer<void(const float *, float *)> (
+      load_answer<void(const int, const float *, float *)> (
           "answer.so", "mem_copy");
 
-  mem_copy_01_kernel_wrapper (n, in, reference);
+  mem_copy_02_kernel_wrapper (n, in, reference);
   check (cudaDeviceSynchronize ());
   check (cudaGetLastError ());
 
@@ -53,7 +57,7 @@ bool mem_copy_01_question_t::check_answer_implementation () const
 
   try
   {
-    user_solution (in, out);
+    user_solution (n, in, out);
     check (cudaDeviceSynchronize ());
     check (cudaGetLastError ());
   }
