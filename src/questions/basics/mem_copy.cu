@@ -41,7 +41,7 @@ __global__ void reference_kernel (
     out[i] = in[i];
 }
 
-bool mem_copy_question_t::check_answer () const
+bool mem_copy_question_t::check_answer_implementation () const
 {
   const int n = 1024;
   float *in {}, *out {}, *reference {};

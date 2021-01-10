@@ -13,7 +13,7 @@ protected:
   const char *get_question_content () const final;
 
 public:
-  bool check_answer () const final;
+  bool check_answer_implementation () const final;
 };
 
 #endif // CUDATUTOR_VEC_ADD_H

@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.69.0 COMPONENTS system filesystem REQUIRED)
+find_package(Boost 1.69.0 COMPONENTS system filesystem program_options REQUIRED)
 configure_file(src/config.cpp.in config.cpp)
 
 find_package(Threads REQUIRED)
@@ -29,6 +29,6 @@ add_executable(cudatutor
 
         src/questions/basics/mem_copy.cu
         include/questions/basics/mem_copy.h
-        include/questions/helpers/array_functions.h)
+        include/questions/helpers/array_functions.h include/arguments.h src/arguments.cpp)
 target_link_libraries(cudatutor PRIVATE ${Boost_LIBRARIES} Threads::Threads ${CMAKE_DL_LIBS})
 target_include_directories(cudatutor PRIVATE ${Boost_INCLUDE_DIR} include)

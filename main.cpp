@@ -1,16 +1,6 @@
-#include <iostream>
+#include "arguments.h"
 
-#include "question.h"
-#include "questions.h"
-
-int main ()
+int main (int argc, char * argv[])
 {
-  questions_t questions;
-
-  question_t &question = *questions.get_questions ().front ();
-
-  question.ask_question ();
-  if (!question.check_answer ())
-    std::cerr << "Wrong answer" << std::endl;
-
+  return parse_command_line_arguments (argc, argv);
 }

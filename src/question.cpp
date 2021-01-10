@@ -48,11 +48,19 @@ bool question_t::ask_question () const
       return true;
     }
 
+  return false;
+}
+
+bool question_t::check_answer () const
+{
+  const char *question_path = "question.cu";
+  const char *answer_path = "answer.so";
+
   if (execution_result result = execute (gen_compilation_command (question_path, answer_path)))
     {
       std::cerr << "Error: " << result.get_error () << std::endl;
       return true;
     }
 
-  return false;
+  return check_answer_implementation ();
 }

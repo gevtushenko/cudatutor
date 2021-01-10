@@ -28,7 +28,7 @@ __global__ void reference_kernel (
     out[i] = in_1[i] + in_2[i];
 }
 
-bool vec_add_question_t::check_answer () const
+bool vec_add_question_t::check_answer_implementation () const
 {
   auto run = load_answer<int()> ("answer.so", "run");
   return run () == 42;
