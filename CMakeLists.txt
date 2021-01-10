@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.17)
-project(cudatutor)
+project(cudatutor CXX CUDA)
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -19,6 +19,16 @@ add_executable(cudatutor
         include/answer.h
         include/config.h
         ${CMAKE_CURRENT_BINARY_DIR}/config.cpp
-        include/question.h src/question.cpp src/questions/basics/vec_add.cpp include/questions.h src/questions.cpp include/questions/vec_add.h)
+        include/question.h 
+        src/question.cpp 
+        include/questions.h
+        src/questions.cpp
+
+        src/questions/basics/vec_add.cu
+        include/questions/basics/vec_add.h
+
+        src/questions/basics/mem_copy.cu
+        include/questions/basics/mem_copy.h
+        include/questions/helpers/array_functions.h)
 target_link_libraries(cudatutor PRIVATE ${Boost_LIBRARIES} Threads::Threads ${CMAKE_DL_LIBS})
 target_include_directories(cudatutor PRIVATE ${Boost_INCLUDE_DIR} include)

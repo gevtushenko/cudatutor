@@ -1,6 +1,6 @@
 //
 
-#include "questions/vec_add.h"
+#include "questions/basics/vec_add.h"
 
 #include "answer.h"
 
@@ -14,6 +14,18 @@ extern "C" BOOST_SYMBOL_EXPORT int run ()
 return 42;
 }
 )";
+}
+
+__global__ void reference_kernel (
+    const int n,
+    const float *in_1,
+    const float *in_2,
+    float *out)
+{
+  const int i = threadIdx.x + blockIdx.x * blockDim.x;
+
+  if (i < n)
+    out[i] = in_1[i] + in_2[i];
 }
 
 bool vec_add_question_t::check_answer () const
