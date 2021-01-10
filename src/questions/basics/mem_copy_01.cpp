@@ -4,12 +4,12 @@
 
 #include <cuda_runtime.h>
 
-#include "questions/basics/mem_copy.h"
+#include "questions/basics/mem_copy_01.h"
 #include "questions/helpers/array_functions.h"
 
 #include "answer.h"
 
-const char *mem_copy_question_t::get_question_content () const
+const char *mem_copy_01_question_t::get_question_content () const
 {
   return R"(
 #include <boost/config.hpp> // for BOOST_SYMBOL_EXPORT
@@ -34,7 +34,7 @@ extern "C" BOOST_SYMBOL_EXPORT void mem_copy (
 )";
 }
 
-bool mem_copy_question_t::check_answer_implementation () const
+bool mem_copy_01_question_t::check_answer_implementation () const
 {
   const int n = 1024;
   float *in {}, *out {}, *reference {};
@@ -49,7 +49,7 @@ bool mem_copy_question_t::check_answer_implementation () const
       load_answer<void(const int, const float *, float *)> (
           "answer.so", "mem_copy");
 
-  mem_copy_kernel_wrapper (n, in, reference);
+  mem_copy_01_kernel_wrapper (n, in, reference);
   check (cudaDeviceSynchronize ());
   check (cudaGetLastError ());
 

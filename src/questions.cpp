@@ -5,12 +5,12 @@
 #include "questions.h"
 #include "question.h"
 
-#include "questions/basics/mem_copy.h"
+#include "questions/basics/mem_copy_01.h"
 #include "questions/basics/vec_add.h"
 
 questions_t::questions_t ()
 {
-  questions.push_back (std::make_unique<mem_copy_question_t> ());
+  questions.push_back (std::make_unique<mem_copy_01_question_t> ());
   questions.push_back (std::make_unique<vec_add_question_t> ());
 }
 

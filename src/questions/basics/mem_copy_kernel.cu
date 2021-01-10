@@ -1,8 +1,8 @@
 //
 
-#include "questions/basics/mem_copy.h"
+#include "questions/basics/mem_copy_01.h"
 
-__global__ void reference_kernel (
+__global__ void mem_copy_01_reference_kernel (
     const int n,
     const float *in,
     float *out)
@@ -13,10 +13,10 @@ __global__ void reference_kernel (
     out[i] = in[i];
 }
 
-void mem_copy_kernel_wrapper (const int n, const float *in, float *out)
+void mem_copy_01_kernel_wrapper (const int n, const float *in, float *out)
 {
   const int block_size = 128;
   const int grid_size = (n + block_size - 1) / block_size;
 
-  reference_kernel<<<grid_size, block_size>>> (n, in, out);
+  mem_copy_01_reference_kernel<<<grid_size, block_size>>> (n, in, out);
 }

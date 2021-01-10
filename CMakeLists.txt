@@ -29,10 +29,10 @@ add_executable(cudatutor
         src/questions/basics/vec_add_kernel.cu
         src/questions/helpers/array_functions.cu
         src/questions/basics/mem_copy_kernel.cu
-        include/questions/basics/mem_copy.h
+        include/questions/basics/mem_copy_01.h
         include/questions/helpers/array_functions.h
         include/arguments.h
         src/arguments.cpp
-        src/questions/basics/mem_copy.cpp)
+        src/questions/basics/mem_copy_01.cpp)
 target_link_libraries(cudatutor PRIVATE ${Boost_LIBRARIES} Threads::Threads ${CMAKE_DL_LIBS})
 target_include_directories(cudatutor PRIVATE ${Boost_INCLUDE_DIR} ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES} include)
